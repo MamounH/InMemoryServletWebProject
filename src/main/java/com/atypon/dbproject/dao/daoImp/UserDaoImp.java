@@ -15,7 +15,7 @@ public class UserDaoImp implements UserDao {
 
     IPasswordHash passwordHash;
 
-    File file = new File(getClass().getClassLoader().getResource("/users.txt").getFile());
+    File file = new File(getClass().getClassLoader().getResource("./users.txt").getFile());
 
 //    private static final String DBPATH = "./users.txt";
     private static final String TEMPPATH = "./userstemp.txt";
