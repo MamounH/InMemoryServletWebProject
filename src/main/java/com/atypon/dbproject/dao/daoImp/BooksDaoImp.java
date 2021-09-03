@@ -14,10 +14,10 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
 
 //    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
-    private static final String DBPATH = "/WEB-INF/classes/bookDetails.csv";
+    private static final String DBPATH = "src/main/webapp/META-INF/bookDetails.csv";
 
 
-    private static final String TEMPPATH = "/WEB-INF/classes/temp.txt";
+    private static final String TEMPPATH = "src/main/webapp/META-INF/temp.txt";
 
     private final Logger logger = Logger.getLogger("DataBase Log");
 
