@@ -11,9 +11,11 @@ import java.util.logging.Logger;
 
 public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
-    private static final String QUOTES = "./src/main/resources/quotes.csv";
+//    private static final String QUOTES = "./src/main/resources/quotes.csv";
 
-    private static final String TEMPPATH = "./src/main/resources/temp2.txt";
+    private static final String QUOTES = "/WEB-INF/classes/quotes.csv";
+
+    private static final String TEMPPATH = "/WEB-INF/classes/temp2.txt";
 
     private final Logger logger = Logger.getLogger("Quotes Log");
 

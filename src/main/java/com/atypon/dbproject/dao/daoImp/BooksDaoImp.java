@@ -12,9 +12,12 @@ import java.util.logging.Logger;
 
 public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
-    private static final String DBPATH = "src/main/webapp/WEB-INF/common/bookDetails.csv";
 
-    private static final String TEMPPATH = "/WEB-INF/common/temp.txt";
+//    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
+    private static final String DBPATH = "/WEB-INF/classes/bookDetails.csv";
+
+
+    private static final String TEMPPATH = "/WEB-INF/classes/temp.txt";
 
     private final Logger logger = Logger.getLogger("DataBase Log");
 
