@@ -14,10 +14,12 @@ import java.util.logging.Logger;
 public class UserDaoImp implements UserDao {
 
     IPasswordHash passwordHash;
+    private static final String DBPATH = "/users.txt";
+    private static final String TEMPPATH = "/userstemp.txt";
 
 
-    private static final String DBPATH = "./src/main/resources/users.txt";
-    private static final String TEMPPATH = "./src/main/resources/userstemp.txt";
+//    private static final String DBPATH = "./src/main/resources/users.txt";
+//    private static final String TEMPPATH = "./src/main/resources/userstemp.txt";
     private final Logger logger = Logger.getLogger("UserDao");
 
     File file = new File(DBPATH);
