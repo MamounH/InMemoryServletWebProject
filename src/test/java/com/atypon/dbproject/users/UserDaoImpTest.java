@@ -24,7 +24,7 @@ public class UserDaoImpTest {
     @Test
     public void testExistingUser() {
         UserDao userDao = new UserDaoImp(new SHA512HashAlgo());
-        assertTrue(userDao.userExists("admin@gmail.com"));
+        assertTrue(userDao.userExists("admin@atypon.com"));
         assertTrue(userDao.userExists("mamoun@atypon.com"));
         assertTrue(userDao.userExists("ahmad@atypon.com"));
         assertFalse(userDao.userExists("nouser"));
