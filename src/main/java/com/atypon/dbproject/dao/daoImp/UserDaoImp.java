@@ -14,6 +14,9 @@ import java.util.logging.Logger;
 public class UserDaoImp implements UserDao {
 
     IPasswordHash passwordHash;
+
+    File file = new File(getClass().getClassLoader().getResource("/users.txt").getFile());
+
     private static final String DBPATH = "/users.txt";
     private static final String TEMPPATH = "/userstemp.txt";
 
@@ -22,7 +25,7 @@ public class UserDaoImp implements UserDao {
 //    private static final String TEMPPATH = "./src/main/resources/userstemp.txt";
     private final Logger logger = Logger.getLogger("UserDao");
 
-    File file = new File(DBPATH);
+//    File file = new File(DBPATH);
     File newFile = new File(TEMPPATH);
 
 

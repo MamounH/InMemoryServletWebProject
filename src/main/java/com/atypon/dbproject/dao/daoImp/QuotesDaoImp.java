@@ -11,6 +11,7 @@ import java.util.logging.Logger;
 
 public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
+    File file = new File(getClass().getClassLoader().getResource("/quotes.csv").getFile());
 
     private static final String QUOTES = "/quotes.csv";
 
@@ -22,7 +23,7 @@ public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 //
     private final Logger logger = Logger.getLogger("Quotes Log");
 
-    File file = new File(QUOTES);
+//    File file = new File(QUOTES);
 
     File newFile = new File(TEMPPATH);
 

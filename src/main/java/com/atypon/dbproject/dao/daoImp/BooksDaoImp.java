@@ -13,7 +13,7 @@ import java.util.logging.Logger;
 public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
 
-//    File file = new File(getClass().getClassLoader().getResource("/bookDetails.csv").getFile());
+    File file = new File(getClass().getClassLoader().getResource("/bookDetails.csv").getFile());
 
     private static final String DBPATH = "/bookDetails.csv";
 
@@ -24,7 +24,7 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
     private final Logger logger = Logger.getLogger("DataBase Log");
 
-    File file = new File(DBPATH);
+//    File file = new File(DBPATH);
 
     File newFile = new File(TEMPPATH);
 
