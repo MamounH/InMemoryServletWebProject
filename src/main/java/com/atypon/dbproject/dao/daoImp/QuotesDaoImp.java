@@ -13,7 +13,7 @@ public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
     File file = new File(getClass().getClassLoader().getResource("/quotes.csv").getFile());
 
-    private static final String QUOTES = "/quotes.csv";
+//    private static final String QUOTES = "/quotes.csv";
 
     private static final String TEMPPATH = "/temp2.txt";
 
@@ -35,7 +35,8 @@ public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
         TreeMap<Integer, V> map = new TreeMap<>();
 
-        try (FileReader fileReader = new FileReader(QUOTES);
+//        try (FileReader fileReader = new FileReader(QUOTES);
+        try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader= new BufferedReader(fileReader)) {
              loadQuotesIntoMap( map, bufferedReader);
         } catch (Exception e) {
@@ -65,8 +66,9 @@ public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
     public boolean recordIsAdded(V value) {
         synchronized (this){
 
-        try(FileWriter fileWriter = new FileWriter(QUOTES, true) ) {
-            addNewRecordToDB(value, fileWriter);
+//        try(FileWriter fileWriter = new FileWriter(QUOTES, true) ) {
+            try(FileWriter fileWriter = new FileWriter(file, true) ) {
+                addNewRecordToDB(value, fileWriter);
             return true;
         } catch (Exception e) {
             logError(e);

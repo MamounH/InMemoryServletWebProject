@@ -15,7 +15,7 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
     File file = new File(getClass().getClassLoader().getResource("/bookDetails.csv").getFile());
 
-    private static final String DBPATH = "/bookDetails.csv";
+//    private static final String DBPATH = "/bookDetails.csv";
 
 //    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
 
@@ -34,7 +34,8 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
         TreeMap<Integer, V> map = new TreeMap<>();
 
-        try (FileReader fileReader = new FileReader(DBPATH);
+//        try (FileReader fileReader = new FileReader(DBPATH);
+        try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader= new BufferedReader(fileReader)) {
             loadDBIntoMap( map, bufferedReader);
         } catch (Exception e) {
@@ -53,7 +54,8 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
     public boolean recordIsAdded(V value) {
         synchronized (this){
 
-            try(FileWriter fileWriter = new FileWriter(DBPATH, true) ) {
+//            try(FileWriter fileWriter = new FileWriter(DBPATH, true) ) {
+            try(FileWriter fileWriter = new FileWriter(file, true) ) {
                 addNewRecordToDB(value, fileWriter);
                 return true;
             } catch (Exception e) {
