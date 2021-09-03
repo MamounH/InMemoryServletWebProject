@@ -13,15 +13,16 @@ import java.util.logging.Logger;
 public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
 
+    File file = new File(getClass().getClassLoader().getResource("/bookDetails.csv").getFile());
+
 //    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
-    private static final String DBPATH = "./src/main/webapp/META-INF/bookDetails.csv";
 
 
-    private static final String TEMPPATH = "./src/main/webapp/META-INF/temp.txt";
+    private static final String TEMPPATH = "./src/main/resources/temp.txt";
 
     private final Logger logger = Logger.getLogger("DataBase Log");
 
-    File file = new File(DBPATH);
+//    File file = new File(DBPATH);
 
     File newFile = new File(TEMPPATH);
 
@@ -31,7 +32,7 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
         TreeMap<Integer, V> map = new TreeMap<>();
 
-        try (FileReader fileReader = new FileReader(DBPATH);
+        try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader= new BufferedReader(fileReader)) {
             loadDBIntoMap( map, bufferedReader);
         } catch (Exception e) {
@@ -50,7 +51,7 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
     public boolean recordIsAdded(V value) {
         synchronized (this){
 
-            try(FileWriter fileWriter = new FileWriter(DBPATH, true) ) {
+            try(FileWriter fileWriter = new FileWriter(file, true) ) {
                 addNewRecordToDB(value, fileWriter);
                 return true;
             } catch (Exception e) {
