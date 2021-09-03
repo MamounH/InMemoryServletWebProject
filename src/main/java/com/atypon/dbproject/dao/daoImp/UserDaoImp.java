@@ -15,9 +15,9 @@ public class UserDaoImp implements UserDao {
 
     IPasswordHash passwordHash;
 
-    File file = new File(getClass().getClassLoader().getResource("./users.txt").getFile());
+    File file = new File(getClass().getClassLoader().getResource("/users.txt").getFile());
 
-    private static final String DBPATH = "./users.txt";
+//    private static final String DBPATH = "./users.txt";
     private static final String TEMPPATH = "./userstemp.txt";
 
 
@@ -37,7 +37,7 @@ public class UserDaoImp implements UserDao {
     @Override
     public User getUser(String username){
 //        try(Scanner scanner =new Scanner(new File(DBPATH)) ){
-        try(Scanner scanner =new Scanner(new File(DBPATH)) ){
+        try(Scanner scanner =new Scanner(new File(file.getAbsolutePath())) ){
             return retrieveUserFromDB(username, scanner);
         } catch (Exception e) {
             logError(e);
@@ -51,7 +51,7 @@ public class UserDaoImp implements UserDao {
         List<User> users = new ArrayList<>();
 
 //        try (FileReader fileReader = new FileReader(DBPATH);
-                     try (FileReader fileReader = new FileReader(DBPATH);
+                     try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader= new BufferedReader(fileReader)) {
              loadUsers(users, bufferedReader);
         } catch (Exception e) {
@@ -122,7 +122,7 @@ public class UserDaoImp implements UserDao {
     private void saveUser(User user) {
 
 //        try (FileWriter fileWriter = new FileWriter(DBPATH, true)){
-            try (FileWriter fileWriter = new FileWriter(DBPATH, true)){
+            try (FileWriter fileWriter = new FileWriter(file, true)){
                 addUserToDb(user, fileWriter);
         } catch (Exception e){
             logError(e);
@@ -169,7 +169,7 @@ public class UserDaoImp implements UserDao {
     public boolean userExists(String username){
         boolean isFound = false;
 //        try (Scanner scanner =new Scanner(new FileReader(DBPATH)) ){
-            try (Scanner scanner =new Scanner(new FileReader(DBPATH)) ){
+            try (Scanner scanner =new Scanner(new FileReader(file)) ){
                 while(scanner.hasNextLine() && !isFound) {
                 isFound = scanner.nextLine().contains(username);
             }
@@ -184,7 +184,7 @@ public class UserDaoImp implements UserDao {
     public User retrieveUser(User user) {
 
 //        try(Scanner scanner =new Scanner(new File(DBPATH)) ){
-            try(Scanner scanner =new Scanner(new File(DBPATH)) ){
+            try(Scanner scanner =new Scanner(new File(file.getAbsolutePath())) ){
 
                 return retrieveUserFromDB(user.getUsername(), scanner);
         } catch (Exception e) {

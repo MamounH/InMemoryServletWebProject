@@ -13,8 +13,9 @@ import java.util.logging.Logger;
 public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
 
-    File file = new File(getClass().getClassLoader().getResource("./bookDetails.csv").getFile());
+    File file = new File(getClass().getClassLoader().getResource("/bookDetails.csv").getFile());
 
+//    private static final String DBPATH = "./bookDetails.csv";
 //    private static final String DBPATH = "/bookDetails.csv";
 
 //    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
