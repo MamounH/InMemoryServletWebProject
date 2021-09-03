@@ -16,10 +16,10 @@ public class UserDaoImp implements UserDao {
     IPasswordHash passwordHash;
 
 
-    private static final String DBPATH = "src/main/webapp/META-INF/users.txt";
+    private static final String DBPATH = "./src/main/webapp/META-INF/users.txt";
 //    private static final String DBPATH = "./src/main/resources/users.txt";
 
-    private static final String TEMPPATH = "src/main/webapp/META-INF/userstemp.txt";
+    private static final String TEMPPATH = "./src/main/webapp/META-INF/userstemp.txt";
     private final Logger logger = Logger.getLogger("UserDao");
 
     File file = new File(DBPATH);
