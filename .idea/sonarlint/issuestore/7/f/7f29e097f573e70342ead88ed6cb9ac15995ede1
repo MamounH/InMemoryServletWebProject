@@ -1,0 +1,16 @@
+
+^
+java:S2259"BA "NullPointerException" could be thrown; "book" is nullable here.(èîÓçüÿÿÿÿ
+X
+java:S2259M"BA "NullPointerException" could be thrown; "book" is nullable here.(¸û¨ª
+D
+java:S1121'".Extract the assignment out of this expression.( ¯Ì—
+J
+java:S6212"/Declare this local variable with "var" instead.(öÀ±úÿÿÿÿ
+N	java:S106)"9Replace this use of System.out or System.err by a logger.(ë½“ï
+J
+java:S6212K"/Declare this local variable with "var" instead.(Àªôõûÿÿÿÿ
+J
+java:S6212"/Declare this local variable with "var" instead.(Àªôõûÿÿÿÿ
+F
+java:S6212"/Declare this local variable with "var" instead.(½‘Òï

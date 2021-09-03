@@ -1,0 +1,16 @@
+
+K
+java:S3740¨"/Provide the parametrized type for this generic.(¸é€ùÿÿÿÿ
+\
+java:S2259€"EA "NullPointerException" could be thrown; "removed" is nullable here.(â·öÜ
+a
+java:S2259"EA "NullPointerException" could be thrown; "removed" is nullable here.(­“Ùÿÿÿÿÿ
+=
+java:S1659
+""Declare "next" on a separate line.(Å—ÜËıÿÿÿÿ
+8
+java:S1659""Declare "last" on a separate line.(–ˆªö
+K
+java:S6212¤"/Declare this local variable with "var" instead.(³¿÷¿ıÿÿÿÿ
+K
+java:S6212¨"/Declare this local variable with "var" instead.(¸é€ùÿÿÿÿ
