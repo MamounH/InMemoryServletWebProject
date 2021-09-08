@@ -11,22 +11,18 @@ import java.util.logging.Logger;
 
 public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
-    File file = new File(getClass().getClassLoader().getResource("./quotes.csv").getFile());
+//    File file = new File(getClass().getClassLoader().getResource("./quotes.csv").getFile());
 
-//    private static final String QUOTES = "/quotes.csv";
 
     private static final String TEMPPATH = "./temp2.txt";
 
-//    private static final String QUOTES = "./src/main/resources/quotes.csv";
-//
-//    private static final String TEMPPATH = "./src/main/resources/temp2.txt";
-//
-    private final Logger logger = Logger.getLogger("Quotes Log");
+    private static final String QUOTES = "./src/main/resources/quotes.csv";
 
-//    File file = new File(QUOTES);
+    File file = new File(QUOTES);
 
     File newFile = new File(TEMPPATH);
 
+    private final Logger logger = Logger.getLogger("Quotes Table Log");
 
 
 
@@ -35,7 +31,6 @@ public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
         TreeMap<Integer, V> map = new TreeMap<>();
 
-//        try (FileReader fileReader = new FileReader(QUOTES);
         try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader= new BufferedReader(fileReader)) {
              loadQuotesIntoMap( map, bufferedReader);
@@ -65,9 +60,7 @@ public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
     @Override
     public boolean recordIsAdded(V value) {
         synchronized (this){
-
-//        try(FileWriter fileWriter = new FileWriter(QUOTES, true) ) {
-            try(FileWriter fileWriter = new FileWriter(file, true) ) {
+        try(FileWriter fileWriter = new FileWriter(file, true) ) {
                 addNewRecordToDB(value, fileWriter);
             return true;
         } catch (Exception e) {

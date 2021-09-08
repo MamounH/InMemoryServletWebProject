@@ -13,29 +13,23 @@ import java.util.logging.Logger;
 public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
 
-    File file = new File(getClass().getClassLoader().getResource("./bookDetails.csv").getFile());
+//    File file = new File(getClass().getClassLoader().getResource("./bookDetails.csv").getFile());
 
-//    private static final String DBPATH = "./bookDetails.csv";
-//    private static final String DBPATH = "/bookDetails.csv";
-
-//    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
-
-//    private static final String TEMPPATH = "./src/main/resources/temp.txt";
     private static final String TEMPPATH = "./temp.txt";
 
-    private final Logger logger = Logger.getLogger("DataBase Log");
+    private static final String DBPATH = "./src/main/resources/bookDetails.csv";
 
-//    File file = new File(DBPATH);
+    File file = new File(DBPATH);
 
     File newFile = new File(TEMPPATH);
 
+    private final Logger logger = Logger.getLogger("Book Table Log");
 
     @Override
     public TreeMap<K, V> loadRecords() {
 
         TreeMap<Integer, V> map = new TreeMap<>();
 
-//        try (FileReader fileReader = new FileReader(DBPATH);
         try (FileReader fileReader = new FileReader(file);
              BufferedReader bufferedReader= new BufferedReader(fileReader)) {
             loadDBIntoMap( map, bufferedReader);
@@ -55,7 +49,6 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
     public boolean recordIsAdded(V value) {
         synchronized (this){
 
-//            try(FileWriter fileWriter = new FileWriter(DBPATH, true) ) {
             try(FileWriter fileWriter = new FileWriter(file, true) ) {
                 addNewRecordToDB(value, fileWriter);
                 return true;
@@ -112,7 +105,6 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
             String[] data = line.split(",");
             Book book = new Book.BookBuilder().ID(Integer.parseInt(data[0])).name(data[1]).subject(data[2])
                     .author(data[3]).publisher(data[4]).year(data[5]).build();
-//            Book book = new Book(Integer.parseInt(data[0]), data[1], data[2], data[3], data[4], data[5]);
             map.put( book.getID(),(V)book);
         }
     }

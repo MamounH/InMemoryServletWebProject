@@ -14,6 +14,8 @@ import java.io.IOException;
 public class AuthenticationFilter implements Filter {
 
     private FilterConfig filterConfig = null;
+    private Role role;
+    private HttpServletRequest request;
 
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -22,24 +24,23 @@ public class AuthenticationFilter implements Filter {
 
     @Override
     public void doFilter(ServletRequest serverReq, ServletResponse serverRes, FilterChain filterChain) throws IOException, ServletException {
-        HttpServletRequest request = (HttpServletRequest) serverReq;
-
-        Role role = (Role) request.getSession().getAttribute("role");
+        request = (HttpServletRequest) serverReq;
+        role = (Role) request.getSession().getAttribute("role");
 
         if (role == null){
-            forwardToLoginPage(serverReq,serverRes,request);
+            forwardToLoginPage(serverReq,serverRes);
         }
         else {
-            handleUser(serverReq, serverRes, filterChain, request, role);
+            handleUserRequest(serverReq, serverRes, filterChain);
         }
     }
 
-    private void handleUser(ServletRequest serverReq, ServletResponse serverRes, FilterChain filterChain, HttpServletRequest request, Role role) throws ServletException, IOException {
+    private void handleUserRequest(ServletRequest serverReq, ServletResponse serverRes, FilterChain filterChain) throws ServletException, IOException {
         switch (role) {
-            case VIEWER -> checkViewerRequest(serverReq, serverRes, request, filterChain);
-            case EDITOR -> checkEditorRequest(serverReq, serverRes, request, filterChain);
+            case VIEWER -> checkViewerRequest(serverReq, serverRes, filterChain);
+            case EDITOR -> checkEditorRequest(serverReq, serverRes, filterChain);
             case ADMIN -> forwardToRequestedPage(serverReq, serverRes, filterChain);
-            default -> forwardToLoginPage(serverReq, serverRes, request);
+            default -> forwardToLoginPage(serverReq, serverRes);
         }
     }
 
@@ -47,19 +48,18 @@ public class AuthenticationFilter implements Filter {
         filterChain.doFilter(serverReq, serverRes);
     }
 
-    private void forwardToLoginPage(ServletRequest serverReq, ServletResponse serverRes, HttpServletRequest request) throws ServletException, IOException {
+    private void forwardToLoginPage(ServletRequest serverReq, ServletResponse serverRes) throws ServletException, IOException {
         request.getRequestDispatcher("/login").forward(serverReq,serverRes);
     }
 
-
-    private void checkEditorRequest(ServletRequest serverReq, ServletResponse serverRes, HttpServletRequest request, FilterChain filterChain) throws ServletException, IOException {
+    private void checkEditorRequest(ServletRequest serverReq, ServletResponse serverRes, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
         if (path.startsWith("/Admin/")){
             request.getRequestDispatcher("/Editor/Books").forward(serverReq, serverRes);
         }  else forwardToRequestedPage(serverReq,serverRes,filterChain);
     }
 
-    private void checkViewerRequest(ServletRequest serverReq, ServletResponse serverRes, HttpServletRequest request, FilterChain filterChain) throws ServletException, IOException {
+    private void checkViewerRequest(ServletRequest serverReq, ServletResponse serverRes, FilterChain filterChain) throws ServletException, IOException {
         String path = request.getServletPath();
 
         if (path.startsWith("/Admin/") || path.startsWith("/Editor/") ){

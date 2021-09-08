@@ -6,8 +6,9 @@ import java.util.TreeMap;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class Table<K,V> extends Transactions<V>{
+public class Table<K,V>  {
 
+    AccessSynch<V> lock= new AccessSynch<>();
 
     private final TreeMap<K , V> table;
     LibraryDao<K,V> tableDao;
@@ -15,8 +16,6 @@ public class Table<K,V> extends Transactions<V>{
     private final Logger logger = Logger.getLogger("Table Logger");
 
     private static final Integer CAPACITY = 20;
-
-
 
     public Table(LibraryDao<K,V> tableDao) {
         this.tableDao=tableDao;
@@ -27,17 +26,15 @@ public class Table<K,V> extends Transactions<V>{
         return table;
     }
 
-
-
     public V get(K key){
         if (table.containsKey(key)){
             try {
-                acquireReadLock(table.get(key));
+                lock.acquireReadLock(table.get(key));
                 return table.get(key);
             } catch (InterruptedException e) {
                 logError(e);
             } finally {
-                releaseReadLock(table.get(key));
+                lock.releaseReadLock(table.get(key));
             }
         }
         return null;
@@ -45,19 +42,23 @@ public class Table<K,V> extends Transactions<V>{
 
     public void add(V value, K key){
         try {
-            acquireWriteLock(value);
-            if (!isStorageFull() && table.get(key)== null) {
-                addNewRecord(value,key);
-            } else
-                logger.log(Level.INFO,"In-Memory Storage is full or Record already exists.");
+            lock.acquireWriteLock(value);
+            addNewRecord(value, key);
         } catch (InterruptedException e) {
             logError(e);
         } finally {
-            releaseWriteLock(value);
+            lock.releaseWriteLock(value);
         }
     }
 
     private void addNewRecord(V value, K key) {
+        if (!isStorageFull() && table.get(key)== null) {
+            addToTable(value, key);
+        } else
+            logger.log(Level.INFO,"In-Memory Storage is full or Record already exists.");
+    }
+
+    private void addToTable(V value, K key) {
         if (tableDao.recordIsAdded(value)){
             table.put(key, value);
             logger.log(Level.INFO,"Successfully Added new Record to the In-Memory");}
@@ -67,14 +68,13 @@ public class Table<K,V> extends Transactions<V>{
     }
 
     public void update(V value, K key) {
-
         try {
-            acquireWriteLock(value);
+            lock.acquireWriteLock(value);
             updateRecord(value, key);
         } catch (Exception e) {
             logError(e);
         } finally {
-            releaseWriteLock(value);
+            lock.releaseWriteLock(value);
         }
     }
 
@@ -90,7 +90,7 @@ public class Table<K,V> extends Transactions<V>{
 
     public void remove(K key) {
         try {
-            acquireWriteLock(table.get(key));
+            lock.acquireWriteLock(table.get(key));
             removeRecord(key);
         } catch (InterruptedException e) {
             logError(e);
@@ -106,12 +106,6 @@ public class Table<K,V> extends Transactions<V>{
             logger.log(Level.INFO , "Couldn't delete record....");
         }
     }
-
-
-    public int getDBSize(){
-        return table.size();
-    }
-
 
     private boolean isStorageFull() { return table.size() == CAPACITY; }
 

@@ -3,9 +3,7 @@ package com.atypon.dbproject.database;
 import java.util.HashMap;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
 
-abstract class Transactions <V>{
-
-
+public class AccessSynch<V>{
 
     private HashMap<V, ReentrantReadWriteLock> locks = new HashMap<V, ReentrantReadWriteLock>();
     private HashMap<V,Integer> lockThreadCounts = new HashMap<V, Integer>();

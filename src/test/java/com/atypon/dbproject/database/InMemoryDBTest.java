@@ -29,10 +29,13 @@ public class InMemoryDBTest {
         inMemoryDB = InMemoryDB.getInstance();
     }
 
+
+
     @Test
     public void getBookTest() {
         assertEquals(booksTable.get(2),inMemoryDB.getBook(2));
     }
+
 
     @Test
     public void getQuoteTest() {
@@ -65,7 +68,7 @@ public class InMemoryDBTest {
 
     @Test
     public void bookIsUpdated() {
-        int id = (Integer) inMemoryDB.getAllBooks().lastEntry().getKey();
+        int id = inMemoryDB.getAllBooks().lastEntry().getKey();
         Book book= new Book.BookBuilder().ID(id).name("test").author("test").subject("test")
                 .publisher("test").year("test").build();
 
@@ -85,7 +88,7 @@ public class InMemoryDBTest {
     @Test
     public void quoteIsUpdated() {
 
-        int id = (Integer) inMemoryDB.getAllQuotes().lastEntry().getKey();
+        int id = inMemoryDB.getAllQuotes().lastEntry().getKey();
 
 
         Quote quote = new Quote.QuoteBuilder().id(id).quote("test").bookId(3).build();
@@ -101,6 +104,113 @@ public class InMemoryDBTest {
         inMemoryDB.removeQuote(id);
 
     }
+
+
+    @Test
+    public void concurrentBookUpdate() {
+
+        Book book = inMemoryDB.getBook(2);
+
+        try {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertTrue(inMemoryDB.bookIsUpdated(book));
+                    } catch (Exception e) {
+                        fail("Error on locking in 1st Thread:"+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertTrue(inMemoryDB.bookIsUpdated(book));
+                    } catch (Exception e) {
+                        fail("Error on locking in 2nd Thread:"+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertTrue(inMemoryDB.bookIsUpdated(book));
+                    } catch (Exception e) {
+                        fail("Error on locking in 3rd Thread:"+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("An error occurred while manipulating inMemory database:" +e.getMessage());
+        }
+
+
+
+
+    }
+
+
+    @Test
+    public void concurrentQuoteUpdate() {
+
+        Quote quote = inMemoryDB.getQuote(2);
+
+        try {
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertTrue(inMemoryDB.quoteIsUpdated(quote));
+                    } catch (Exception e) {
+                        fail("Error on locking in 1st Thread:"+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertTrue(inMemoryDB.quoteIsUpdated(quote));
+                    } catch (Exception e) {
+                        fail("Error on locking in 2nd Thread:"+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+
+            new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    try {
+                        assertTrue(inMemoryDB.quoteIsUpdated(quote));
+                    } catch (Exception e) {
+                        fail("Error on locking in 3rd Thread:"+e.getMessage());
+                        e.printStackTrace();
+                    }
+                }
+            }).start();
+        } catch (Exception e) {
+            e.printStackTrace();
+            fail("An error occurred while manipulating inMemory database:" +e.getMessage());
+        }
+
+
+
+
+    }
+
 
 
 }

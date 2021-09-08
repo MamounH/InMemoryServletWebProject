@@ -6,7 +6,7 @@ import java.util.Objects;
 public class Book implements Serializable {
 
 
-    private  int ID;
+    private int ID;
     private final String name;
     private final String author;
     private final String subject;

@@ -56,6 +56,7 @@ public class AddUserServlet extends HttpServlet {
         String username = request.getParameter("username");
         String password = request.getParameter("password");
         String role = request.getParameter("role");
+
         return new User.UserBuilder().username(username).fName(fName).lName(lName)
                 .password(password).role(Role.valueOf(role)).build();
     }

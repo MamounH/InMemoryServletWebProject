@@ -4,11 +4,9 @@ import java.util.Objects;
 
 public class Quote {
 
-
     private int id;
     private final int bookId;
     private final String quote;
-
     private String bookName;
 
 

@@ -1,7 +1,5 @@
 package com.atypon.dbproject.securityconf;
 
-import com.atypon.dbproject.securityconf.IPasswordHash;
-
 import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,7 +7,7 @@ import java.security.SecureRandom;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class SHA512HashAlgo implements IPasswordHash {
+public class SHA512HashAlgo implements PasswordEncoder {
 
     private final Logger logger = Logger.getLogger("PasswordHashClass");
 

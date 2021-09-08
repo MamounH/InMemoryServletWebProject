@@ -15,8 +15,11 @@ public class InMemoryDB {
     LibraryDao<Integer,Book> bookLibraryDao = new BooksDaoImp<>();
     LibraryDao<Integer,Quote> QuoteLibraryDao = new QuotesDaoImp<>();
 
-    private Table<Integer,Book> booksTable = new Table<>(bookLibraryDao);
-    private Table<Integer,Quote> quotesTable = new Table<>(QuoteLibraryDao);
+    private final Table<Integer,Book> booksTable = new Table<>(bookLibraryDao);
+    private final Table<Integer,Quote> quotesTable = new Table<>(QuoteLibraryDao);
+
+    private final IDGenerator idGenerator = new IDGenerator(booksTable.getAll().lastEntry().getKey(),
+            quotesTable.getAll().lastEntry().getKey());
 
 
     private static InMemoryDB instance;
@@ -31,11 +34,11 @@ public class InMemoryDB {
     }
 
 
-    public TreeMap getAllBooks(){
+    public TreeMap<Integer,Book> getAllBooks(){
         return booksTable.getAll();
     }
 
-    public TreeMap getAllQuotes(){
+    public TreeMap<Integer,Quote> getAllQuotes(){
         assignBookNames();
         return quotesTable.getAll();
 
@@ -56,7 +59,7 @@ public class InMemoryDB {
         return quotesTable.get(key);
     }
 
-    public TreeMap getBookQuotes(int id) {
+    public TreeMap<Integer,Quote> getBookQuotes(int id) {
 
         TreeMap<Integer,Quote> quotes = new TreeMap<>();
 
@@ -76,8 +79,7 @@ public class InMemoryDB {
         if (InputExceptions.isNull(book)){
             return false;
         } else {
-            int id = booksTable.get(booksTable.getAll().lastEntry().getKey()).getID() + 1;
-            book.setID(id);
+            book.setID(idGenerator.getNewBookId());
             booksTable.add(book,book.getID());
         }
         return booksTable.recordExists(book.getID());
@@ -88,8 +90,7 @@ public class InMemoryDB {
         if (InputExceptions.isNull(quote)){
             return false;
         } else {
-            int id = quotesTable.get((Integer) getAllQuotes().lastEntry().getKey()).getId() + 1;
-            quote.setId(id);
+            quote.setId(idGenerator.getNewQuoteId());
             quotesTable.add(quote,quote.getId());
         }
         return quotesTable.recordExists(quote.getId());

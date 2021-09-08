@@ -3,6 +3,10 @@ package com.atypon.dbproject.exceptions;
 
 public class InputExceptions {
 
+    private InputExceptions() {
+        throw new AssertionError();
+    }
+
     public static boolean isNull(final Object reference) {
         String checker = reference.toString();
         String[] newStrings = checker.split(",");
@@ -12,10 +16,6 @@ public class InputExceptions {
             }
         }
         return false;
-    }
-
-    public static boolean isEmptyCredentials(String username, String password){
-        return  username.isEmpty() ||password.isEmpty();
     }
 
     public static boolean isEmpty(final String str) {
