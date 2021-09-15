@@ -6,6 +6,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public interface ILoginHandler {
+
     void handleLogin(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException;
 
 }

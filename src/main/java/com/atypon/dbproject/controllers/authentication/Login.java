@@ -13,7 +13,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/login")
-public class LoginServlet extends HttpServlet {
+public class Login extends HttpServlet {
 
     private ILoginHandler loginHandler;
 
@@ -29,9 +29,7 @@ public class LoginServlet extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         loginHandler.handleLogin(request,response);
-
     }
 
 

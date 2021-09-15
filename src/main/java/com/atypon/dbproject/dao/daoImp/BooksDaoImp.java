@@ -13,13 +13,13 @@ import java.util.logging.Logger;
 public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
 
 
-//    File file = new File(getClass().getClassLoader().getResource("./bookDetails.csv").getFile());
+    File file = new File(getClass().getClassLoader().getResource("./bookDetails.csv").getFile());
 
     private static final String TEMPPATH = "./temp.txt";
 
     private static final String DBPATH = "./src/main/resources/bookDetails.csv";
 
-    File file = new File(DBPATH);
+//    File file = new File(DBPATH);
 
     File newFile = new File(TEMPPATH);
 
@@ -37,11 +37,6 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
             logError(e);
         }
         return (TreeMap<K, V>) map;
-    }
-
-    @Override
-    public boolean RecordsAreDeleted(K key) {
-        return false;
     }
 
 
@@ -98,6 +93,22 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
         }
     }
 
+    @Override
+    public boolean RecordsAreDeleted(K key) {
+        synchronized (this){
+            try (FileReader fileReader =new FileReader(file);
+                 BufferedReader bufferedReader=new BufferedReader(fileReader);
+                 FileWriter fileWriter = new FileWriter(newFile)){
+
+                deleteRecordsFromDB(key, bufferedReader, fileWriter);
+            } catch (Exception e) {
+                logError(e);
+                return false;
+            }
+            return handleTempFile(file, newFile);
+        }
+    }
+
 
     private void loadDBIntoMap(TreeMap<Integer, V> map, BufferedReader bufferedReader) throws IOException {
         String line;
@@ -137,6 +148,20 @@ public class BooksDaoImp<K,V> implements LibraryDao<K,V> {
             String[] data = line.split(",");
 
             if (key.equals(Integer.parseInt(data[0]))) {
+                logger.log(Level.INFO,"Record Found, Deleting Record....");
+            } else {
+                fileWriter.write(line + "\n");
+            }
+        }
+        fileWriter.flush();
+    }
+
+    private void deleteRecordsFromDB(K key, BufferedReader bufferedReader, FileWriter fileWriter) throws IOException {
+        String line;
+        while ((line = bufferedReader.readLine()) != null) {
+            String[] data = line.split(",");
+
+            if (key.equals(Integer.parseInt(data[1]))) {
                 logger.log(Level.INFO,"Record Found, Deleting Record....");
             } else {
                 fileWriter.write(line + "\n");

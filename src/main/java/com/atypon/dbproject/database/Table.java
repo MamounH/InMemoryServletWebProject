@@ -15,7 +15,7 @@ public class Table<K,V>  {
 
     private final Logger logger = Logger.getLogger("Table Logger");
 
-    private static final Integer CAPACITY = 20;
+    private static final Integer CAPACITY = 40;
 
     public Table(LibraryDao<K,V> tableDao) {
         this.tableDao=tableDao;
@@ -27,27 +27,25 @@ public class Table<K,V>  {
     }
 
     public V get(K key){
-        if (table.containsKey(key)){
             try {
-                lock.acquireReadLock(table.get(key));
+                lock.getReadLock(table.get(key));
                 return table.get(key);
             } catch (InterruptedException e) {
                 logError(e);
             } finally {
-                lock.releaseReadLock(table.get(key));
+                lock.unlockReadLock(table.get(key));
             }
-        }
-        return null;
+        return (V) new Object();
     }
 
     public void add(V value, K key){
         try {
-            lock.acquireWriteLock(value);
+            lock.getWriteLock(value);
             addNewRecord(value, key);
         } catch (InterruptedException e) {
             logError(e);
         } finally {
-            lock.releaseWriteLock(value);
+            lock.unlockWriteLock(value);
         }
     }
 
@@ -69,12 +67,12 @@ public class Table<K,V>  {
 
     public void update(V value, K key) {
         try {
-            lock.acquireWriteLock(value);
+            lock.getWriteLock(value);
             updateRecord(value, key);
         } catch (Exception e) {
             logError(e);
         } finally {
-            lock.releaseWriteLock(value);
+            lock.unlockWriteLock(value);
         }
     }
 
@@ -90,7 +88,7 @@ public class Table<K,V>  {
 
     public void remove(K key) {
         try {
-            lock.acquireWriteLock(table.get(key));
+            lock.getWriteLock(table.get(key));
             removeRecord(key);
         } catch (InterruptedException e) {
             logError(e);

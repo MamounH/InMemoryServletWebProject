@@ -51,10 +51,10 @@ public class SHA512HashAlgo implements PasswordEncoder {
 
         BigInteger bi = new BigInteger(1,array);
         String hex = bi.toString(16);
-        int paddinglength = (array.length*2) - hex.length();
+        int paddingLength = (array.length*2) - hex.length();
 
-        if (paddinglength>0)
-            return String.format("%0"+paddinglength+"d",0)+hex;
+        if (paddingLength>0)
+            return String.format("%0"+paddingLength+"d",0)+hex;
         else return hex;
     }
 

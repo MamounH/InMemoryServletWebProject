@@ -15,8 +15,6 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 
-// move adding config to another class responsibility
-
 @WebServlet(urlPatterns = "/Admin/AddUser")
 public class AddUserServlet extends HttpServlet {
 
@@ -64,7 +62,7 @@ public class AddUserServlet extends HttpServlet {
     private boolean userIsAdded(User user){
         lock.lock();
         try {
-            return AddUser(user);
+            return addNewUser(user);
         } catch (Exception e){
             logError(e);
         }finally {
@@ -73,13 +71,13 @@ public class AddUserServlet extends HttpServlet {
         return false;
     }
 
-    private boolean AddUser(User user) {
+    private boolean addNewUser(User user) {
         if (usersDao.userExists(user.getUsername())){
             return false;
         }
         else{
             usersDao.createUser(user);
-            return true;
+            return usersDao.userExists(user.getUsername());
         }
     }
 

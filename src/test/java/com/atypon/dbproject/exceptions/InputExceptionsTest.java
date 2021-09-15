@@ -20,8 +20,12 @@ public class InputExceptionsTest {
     }
 
     @Test
-    public void testIsEmptyString(){
+    public void testIsEmptyNormalCase(){
         assertFalse(InputExceptions.isEmpty("test"));
+    }
+
+    @Test
+    public void testIsEmptyNullCase(){
         assertTrue(InputExceptions.isEmpty(""));
     }
 

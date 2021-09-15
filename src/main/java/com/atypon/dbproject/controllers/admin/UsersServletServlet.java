@@ -10,13 +10,12 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet(urlPatterns = "/Admin/Users")
-public class UsersServlet extends HttpServlet {
+public class UsersServletServlet extends HttpServlet {
 
     private UserDao usersDao;
 
     @Override
     public void init() throws ServletException {
-        super.init();
         usersDao = new UserDaoImp(new SHA512HashAlgo());
     }
 

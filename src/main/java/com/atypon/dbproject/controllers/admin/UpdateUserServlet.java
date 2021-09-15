@@ -18,7 +18,6 @@ public class UpdateUserServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
         usersDao = new UserDaoImp(new SHA512HashAlgo());
     }
 
@@ -32,7 +31,7 @@ public class UpdateUserServlet extends HttpServlet {
     }
 
     @Override
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws IOException {
         User user = getUser(request);
 
         String oldEmail = request.getParameter("email");

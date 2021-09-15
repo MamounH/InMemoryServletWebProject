@@ -17,7 +17,6 @@ public class DeleteUserServlet extends HttpServlet {
 
     @Override
     public void init() throws ServletException {
-        super.init();
         usersDao = new UserDaoImp(new SHA512HashAlgo());
     }
 

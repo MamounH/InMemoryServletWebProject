@@ -41,8 +41,6 @@ public class AddQuoteServlet extends HttpServlet {
     }
 
     private Quote getQuote(HttpServletRequest req) {
-
-//        int id = inMemoryDB.getQuote((Integer) inMemoryDB.getAllQuotes().lastEntry().getKey()).getId() + 1;
         int bookId = Integer.parseInt(req.getParameter("bookId"));
         String quote = req.getParameter("quote");
         return new Quote.QuoteBuilder().bookId(bookId).quote(quote).bookName("name").build();

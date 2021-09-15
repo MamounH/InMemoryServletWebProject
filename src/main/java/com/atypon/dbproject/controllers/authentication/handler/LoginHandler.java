@@ -12,7 +12,7 @@ import java.io.IOException;
 
 public class LoginHandler implements ILoginHandler{
 
-    private UserDao userDao;
+    private final UserDao userDao;
 
     public LoginHandler(){
         userDao = new UserDaoImp(new SHA512HashAlgo());

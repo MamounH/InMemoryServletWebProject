@@ -68,6 +68,7 @@ public class InMemoryDBTest {
 
     @Test
     public void bookIsUpdated() {
+
         int id = inMemoryDB.getAllBooks().lastEntry().getKey();
         Book book= new Book.BookBuilder().ID(id).name("test").author("test").subject("test")
                 .publisher("test").year("test").build();
@@ -91,7 +92,7 @@ public class InMemoryDBTest {
         int id = inMemoryDB.getAllQuotes().lastEntry().getKey();
 
 
-        Quote quote = new Quote.QuoteBuilder().id(id).quote("test").bookId(3).build();
+        Quote quote = new Quote.QuoteBuilder().quote("test").bookId(3).build();
 
         inMemoryDB.quoteIsAdded(quote);
 
@@ -162,7 +163,7 @@ public class InMemoryDBTest {
     @Test
     public void concurrentQuoteUpdate() {
 
-        Quote quote = inMemoryDB.getQuote(2);
+        Quote quote = inMemoryDB.getQuote(12);
 
         try {
 

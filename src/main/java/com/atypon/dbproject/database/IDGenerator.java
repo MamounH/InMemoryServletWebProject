@@ -22,5 +22,14 @@ public class IDGenerator {
         return quoteId;
     }
 
+    protected synchronized int getLatestBookId(){
+        return bookId;
+    }
+
+    protected synchronized int getLatestQuoteId(){
+        return quoteId;
+    }
+
+
 
 }

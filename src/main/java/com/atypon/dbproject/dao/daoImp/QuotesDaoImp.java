@@ -11,14 +11,14 @@ import java.util.logging.Logger;
 
 public class QuotesDaoImp <K,V> implements LibraryDao<K,V> {
 
-//    File file = new File(getClass().getClassLoader().getResource("./quotes.csv").getFile());
+    File file = new File(getClass().getClassLoader().getResource("./quotes.csv").getFile());
 
 
     private static final String TEMPPATH = "./temp2.txt";
 
     private static final String QUOTES = "./src/main/resources/quotes.csv";
 
-    File file = new File(QUOTES);
+//    File file = new File(QUOTES);
 
     File newFile = new File(TEMPPATH);
 

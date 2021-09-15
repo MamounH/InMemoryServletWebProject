@@ -15,12 +15,12 @@ public class UserDaoImp implements UserDao {
 
     PasswordEncoder passwordHash;
 
-//    File file = new File(getClass().getClassLoader().getResource("./users.txt").getFile());
+    File file = new File(getClass().getClassLoader().getResource("./users.txt").getFile());
 
     private static final String TEMPPATH = "./userstemp.txt";
     private static final String DBPATH = "./src/main/resources/users.txt";
 
-    File file = new File(DBPATH);
+//    File file = new File(DBPATH);
     File newFile = new File(TEMPPATH);
 
 
