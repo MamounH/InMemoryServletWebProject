@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 
 @WebFilter(urlPatterns = "*")
-public class AuthenticationFilter implements Filter {
+public class AuthorizationFilter implements Filter {
 
     private FilterConfig filterConfig = null;
     private Role role;
