@@ -214,7 +214,7 @@
             <div class="card card2">
                 <div class="my-auto mx-md-5 px-md-5 right">
                  <span class="img-container">
-                    <h4 style="text-align: justify" class="text-white">test 1 "Anyone who stops learning is old, whether at twenty or eighty. Anyone who keeps learning stays young. The greatest thing in life is to keep your mind young." -Henry Ford </h4>
+                    <h4 style="text-align: justify" class="text-white">"Anyone who stops learning is old, whether at twenty or eighty. Anyone who keeps learning stays young. The greatest thing in life is to keep your mind young." -Henry Ford </h4>
                      <span class="img-container">
                      <img id="logo1" src="https://raw.githubusercontent.com/MamounH/Logo/main/divider.png"  />
                     </span>
