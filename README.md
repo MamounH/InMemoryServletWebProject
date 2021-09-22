@@ -35,8 +35,8 @@ The system has 3 levels of users: Students, Instructors, Admins.
 
 ## Technology Stack
 - Java 16
-- Spring Core, Boot, MVC, Security
-- Thymeleaf rendring engine and Bootstrap CSS framework for the front-end, with Thymeleaf extras for security. 
+- Traditional Servlets. 
+- JSP template engine and Bootstrap CSS framework for the front-end.
 - Junit
 - Maven Build Tool
 - Jenkins for CI/CD
